@@ -17,7 +17,7 @@ const App = () => {
       rootMargin: "0px",
       threshold: 1.0,
     };
-    let observer = new IntersectionObserver(debounce(nextPage, 500), options);
+    let observer = new IntersectionObserver(nextPage, options);
     if (loader.current) {
       observer.observe(loader.current);
     }
@@ -28,8 +28,8 @@ const App = () => {
       `http://www.pinkvilla.com/photo-gallery-feed-page/page/${currentPage}`
     )
       .then((articles) => articles.json())
-      .then((articles) => {
-        setArticles(articles.nodes);
+      .then((newArticles) => {
+        setArticles([...articles, ...newArticles.nodes]);
       });
   }, [currentPage]);
 
